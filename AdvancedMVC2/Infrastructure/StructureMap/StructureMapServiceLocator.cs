@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 
 namespace AdvancedMVC2.Infrastructure.StructureMap

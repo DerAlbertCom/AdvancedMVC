@@ -1,6 +1,7 @@
 using System;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Microsoft.Practices.ServiceLocation;
 
 namespace AdvancedMVC2.Infrastructure.MVC
 {

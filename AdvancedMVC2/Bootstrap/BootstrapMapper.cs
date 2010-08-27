@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using AdvancedMVC2.Infrastructure.Bootstrap;
 using AdvancedMVC2.Infrastructure.Extensions;
 using AutoMapper;
 
-namespace AdvancedMVC2.Infrastructure.Bootstrap
+namespace AdvancedMVC2.Bootstrap
 {
     public class BootstrapMapper : IBootstrapItem
     {
