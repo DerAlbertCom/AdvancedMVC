@@ -3,12 +3,12 @@ using AdvancedMVC2.Services;
 
 namespace AdvancedMVC2.Settings
 {
-    public class SettingsEdit
+    public class EditableSettings
     {
         private readonly string baseKey;
         private readonly ISettingsService service;
 
-        public SettingsEdit(string key, ISettingsService service)
+        public EditableSettings(string key, ISettingsService service)
         {
             baseKey = key;
             this.service = service;

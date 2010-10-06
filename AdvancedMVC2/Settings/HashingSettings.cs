@@ -4,15 +4,15 @@ namespace AdvancedMVC2.Settings
 {
     public class HashingSettings : IHashingSettings
     {
-        private readonly SettingsEdit settings;
+        private readonly EditableSettings editableSettings;
 
         public HashingSettings(ISettingsService service)
         {
-            settings = new SettingsEdit("hashing", service);
+            editableSettings = new EditableSettings("hashing", service);
         }
 
         public string Salt {
-            get { return settings.Get(@"salt", @"gesalzen"); }
+            get { return editableSettings.Get(@"salt", @"gesalzen"); }
         }
     }
 }

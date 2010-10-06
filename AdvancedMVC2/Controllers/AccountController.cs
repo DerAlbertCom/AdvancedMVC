@@ -13,7 +13,7 @@ namespace AdvancedMVC2.Controllers
 {
 
     [HandleError]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
 
         public IFormsAuthenticationService FormsService { get; set; }

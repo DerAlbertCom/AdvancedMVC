@@ -21,7 +21,7 @@ namespace AdvancedMVC2.DomainObjects
 
         private string GetConvertedString(object value)
         {
-            return (string) Converter.Current.ConvertTo(value,typeof(string), CultureInfo.InvariantCulture);
+            return (string) Converter.Current.ChangeType(value,typeof(string), CultureInfo.InvariantCulture);
         }
 
         public T GetValue<T>(T defaultValue = default(T))
@@ -40,7 +40,7 @@ namespace AdvancedMVC2.DomainObjects
 
         private T GetConverted<T>()
         {
-            return (T) Converter.Current.ConvertTo(Value,typeof(T),CultureInfo.InvariantCulture);
+            return (T) Converter.Current.ChangeType(Value,typeof(T),CultureInfo.InvariantCulture);
         }
 
         public void SetName(string name)
@@ -48,6 +48,10 @@ namespace AdvancedMVC2.DomainObjects
             if (name == null)
             {
                 throw new ArgumentNullException("name");
+            }
+            if (!string.IsNullOrWhiteSpace(Name))
+            {
+                throw new InvalidOperationException("the Name of the Setting is already set");
             }
             Name = name;
         }

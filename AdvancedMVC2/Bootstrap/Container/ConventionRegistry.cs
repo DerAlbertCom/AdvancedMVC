@@ -1,16 +1,19 @@
 ﻿using System.ComponentModel;
+using AdvancedMVC2.Factories;
+using AdvancedMVC2.Infrastructure.Repositories;
 using AdvancedMVC2.ModelBinder;
+using AdvancedMVC2.Services;
+using AdvancedMVC2.Settings;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;
 
 namespace AdvancedMVC2.Bootstrap.Container
 {
-    public class NamespaceRegistry : Registry
+    public class ConventionRegistry : Registry
     {
-        public NamespaceRegistry()
+        public ConventionRegistry()
         {
             DefaultInterfaceConvention();
-            FactoriesConvention();
             WithSameBaseType();
         }
 
@@ -31,23 +34,11 @@ namespace AdvancedMVC2.Bootstrap.Container
             Scan(x =>
                 {
                     AddAssemblies(x);
-
-                    x.IncludeNamespace("Regularly.DomainServices");
-                    x.IncludeNamespace("Regularly.Services");
-                    x.IncludeNamespace("Regularly.Repositories");
-                    x.IncludeNamespace("Regularly.Factories");
-                    x.IncludeNamespace("Regularly.Infrastructure.Repositories");
-                    x.IncludeNamespace("Regularly.Infrastructure.Provider");
+                    x.IncludeNamespace(typeof(IDesignSettings).Namespace);
+                    x.IncludeNamespace(typeof(IHashing).Namespace);
+                    x.IncludeNamespace(typeof(IRepository<>).Namespace);
+                    x.IncludeNamespace(typeof(IWebUserFactory).Namespace);
                     x.WithDefaultConventions();
-                });
-        }
-
-        private void FactoriesConvention()
-        {
-            Scan(x =>
-                {
-                    AddAssemblies(x);
-                    x.RegisterConcreteTypesAgainstTheFirstInterface();
                 });
         }
 

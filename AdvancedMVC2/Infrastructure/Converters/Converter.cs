@@ -37,7 +37,7 @@ namespace AdvancedMVC2.Infrastructure.Converters
             this.typeConverters = typeConverters;
         }
 
-        public object ConvertTo(object value, Type resultType, CultureInfo culture)
+        public object ChangeType(object value, Type resultType, CultureInfo culture)
         {
             if (value == null)
             {
@@ -53,16 +53,9 @@ namespace AdvancedMVC2.Infrastructure.Converters
             return Convert.ChangeType(value, resultType, culture);
         }
 
-        public object ConvertTo(object value, Type resultType)
+        public object ChangeType(object value, Type resultType)
         {
-            return ConvertTo(value, resultType, CultureInfo.CurrentCulture);
+            return ChangeType(value, resultType, CultureInfo.CurrentCulture);
         }
-    }
-
-
-    public interface IConverter
-    {
-        object ConvertTo(object value, Type resultType, CultureInfo culture);
-        object ConvertTo(object value, Type resultType);
     }
 }

@@ -56,15 +56,16 @@ namespace AdvancedMVC2.Infrastructure.Converters
             {
                 return new Size(0, 0);
             }
-            value = value.Replace(" ", "");
-            value = value.Replace(" ", "");
-            value = value.Replace(" ", "");
-            value = value.Replace(" ", "");
-            value = value.Trim();
+            value = RemoveSpaces(value);
             var values = value.Split('x');
             int width = Convert.ToInt32(values[0]);
             int height = Convert.ToInt32(values[1]);
             return new Size(width, height);
+        }
+
+        private string RemoveSpaces(string value)
+        {
+            return value.Replace(" ", "").Trim();
         }
 
         private object SizeToString(Size value, CultureInfo culture)

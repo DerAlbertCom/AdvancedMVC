@@ -4,46 +4,46 @@ namespace AdvancedMVC2.Settings
 {
     public class NewsletterSettings : INewsletterSettings
     {
-        private readonly SettingsEdit settings;
+        private readonly EditableSettings editableSettings;
 
         public NewsletterSettings(ISettingsService service) {
-            settings = new SettingsEdit("newsletter",service);
+            editableSettings = new EditableSettings("newsletter",service);
         }
 
         public string TemplateDirectory {
-            get { return settings.Get(@"templates", @"~/Templates/Mail"); }
+            get { return editableSettings.Get(@"templates", @"~/Templates/Mail"); }
         }
 
         public string SiteName {
-            get { return settings.Get(@"siteName", @"Newsletter-System"); }
+            get { return editableSettings.Get(@"siteName", @"Newsletter-System"); }
         }
 
         public string NewsletterOwner {
-            get { return settings.Get(@"owner", @""); }
+            get { return editableSettings.Get(@"owner", @""); }
         }
 
         public string NewsletterOwnerUrl {
-            get { return settings.Get(@"ownerUrl", @""); }
+            get { return editableSettings.Get(@"ownerUrl", @""); }
         }
 
         public string NewsletterName {
-            get { return settings.Get(@"name", @""); }
+            get { return editableSettings.Get(@"name", @""); }
         }
 
         public string DefaultNewsletterName {
-            get { return settings.Get(@"default", @""); }
+            get { return editableSettings.Get(@"default", @""); }
         }
 
         public bool PasswordGeneration {
-            get { return settings.Get(@"passwordGeneration", false); }
+            get { return editableSettings.Get(@"passwordGeneration", false); }
         }
 
         public int WebSiteFilter {
-            get { return settings.Get(@"webSite", 0); }
+            get { return editableSettings.Get(@"webSite", 0); }
         }
 
         public string SiteUrl {
-            get { return settings.Get(@"siteUrl", @""); }
+            get { return editableSettings.Get(@"siteUrl", @""); }
         }
     }
 }

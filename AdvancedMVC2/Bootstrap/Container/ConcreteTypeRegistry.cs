@@ -7,18 +7,28 @@ namespace AdvancedMVC2.Bootstrap.Container
     {
         public ConcreteTypeRegistry()
         {
+            ScanForBootstrap();
+            ScanForController();
+        }
+
+        private void ScanForController()
+        {
+            Scan(x=>
+                     {
+                         x.Assembly(GetType().Assembly);
+                         x.Include(type => type.Name.EndsWith("Controller"));
+                         x.With(new ConcreteTypeConvention());
+                     });
+        }
+
+        private void ScanForBootstrap()
+        {
             Scan(x =>
                      {
                          x.Assembly(GetType().Assembly);
-                         x.IncludeNamespace("Regularly.Bootstrap");
+                         x.IncludeNamespace(typeof(BootstrapContainer).Namespace);
                          x.With(new ConcreteTypeConvention());
                      });
-            Scan(x=>
-                {
-                    x.Assembly(GetType().Assembly);
-                    x.Include(type => type.Name.EndsWith("Controller"));
-                    x.With(new ConcreteTypeConvention());
-                });
         }
     }
 }

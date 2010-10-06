@@ -4,31 +4,31 @@ namespace AdvancedMVC2.Settings
 {
     public class SmtpSettings : ISmtpSettings
     {
-        private readonly SettingsEdit settings;
+        private readonly EditableSettings editableSettings;
 
         public SmtpSettings(ISettingsService settings)
         {
-            this.settings = new SettingsEdit("smtp", settings);
+            this.editableSettings = new EditableSettings("smtp", settings);
         }
 
         public string SmtpService {
-            get { return settings.Get(@"server", @"localhost"); }
+            get { return editableSettings.Get(@"server", @"localhost"); }
         }
 
         public int SmtpPort {
-            get { return settings.Get(@"port", 25); }
+            get { return editableSettings.Get(@"port", 25); }
         }
 
         public string SmtpUsername {
-            get { return settings.Get(@"username", @""); }
+            get { return editableSettings.Get(@"username", @""); }
         }
 
         public string SmtpPassword {
-            get { return settings.Get(@"password", @""); }
+            get { return editableSettings.Get(@"password", @""); }
         }
 
         public string SmtpFrom {
-            get { return settings.Get(@"from", @""); }
+            get { return editableSettings.Get(@"from", @""); }
         }
     }
 }

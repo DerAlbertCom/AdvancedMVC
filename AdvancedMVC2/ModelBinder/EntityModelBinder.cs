@@ -9,11 +9,11 @@ namespace AdvancedMVC2.ModelBinder
 {
     public abstract class EntityModelBinder<T> : ITypedModelBinder where T : DomainObject
     {
-        protected readonly IServiceLocator ServiceLocator;
+        private readonly IServiceLocator serviceLocator;
 
         protected EntityModelBinder(IServiceLocator serviceLocator)
         {
-            this.ServiceLocator = serviceLocator;
+            this.serviceLocator = serviceLocator;
         }
 
         public virtual object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
@@ -26,7 +26,7 @@ namespace AdvancedMVC2.ModelBinder
 
         protected virtual IRepository<T> CreateRepository()
         {
-            return ServiceLocator.GetInstance<IRepository<T>>();
+            return serviceLocator.GetInstance<IRepository<T>>();
         }
 
         public virtual Type BindingType()

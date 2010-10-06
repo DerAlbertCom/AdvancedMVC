@@ -1,6 +1,7 @@
 using System.Web.Mvc;
 using AdvancedMVC2.Infrastructure.Extensions;
 using AdvancedMVC2.Infrastructure.MVC.Commands;
+using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 
 namespace AdvancedMVC2.Infrastructure.MVC
@@ -9,12 +10,12 @@ namespace AdvancedMVC2.Infrastructure.MVC
     {
         private readonly IContainer container;
 
-        public StructureMapControllerActionInvoker(IContainer container)
+        public StructureMapControllerActionInvoker()
         {
-            this.container = container;
+            container = ServiceLocator.Current.GetInstance<IContainer>();
         }
 
-        private void InjectInstances(object target)
+        private void InjectDependencies(object target)
         {
             container.BuildUp(target);
         }
@@ -22,31 +23,17 @@ namespace AdvancedMVC2.Infrastructure.MVC
         protected override FilterInfo GetFilters(ControllerContext controllerContext, ActionDescriptor actionDescriptor)
         {
             var filterInfo = base.GetFilters(controllerContext, actionDescriptor);
-            filterInfo.ActionFilters.ForEach(InjectInstances);
-            filterInfo.AuthorizationFilters.ForEach(InjectInstances);
-            filterInfo.ExceptionFilters.ForEach(InjectInstances);
-            filterInfo.ResultFilters.ForEach(InjectInstances);
+            filterInfo.ActionFilters.ForEach(InjectDependencies);
+            filterInfo.AuthorizationFilters.ForEach(InjectDependencies);
+            filterInfo.ExceptionFilters.ForEach(InjectDependencies);
+            filterInfo.ResultFilters.ForEach(InjectDependencies);
             return filterInfo;
         }
 
-        protected override ActionResult CreateActionResult(
-            ControllerContext controllerContext,
-            ActionDescriptor actionDescriptor,
-            object actionReturnValue)
+        protected override void InvokeActionResult(ControllerContext controllerContext, ActionResult actionResult)
         {
-            if (actionReturnValue is ICommandResult)
-            {
-                var openWrappedType = typeof (CommandResultInvokerFacade<>);
-                var actionMethodResultType = actionReturnValue.GetType();
-                var wrappedResultType = openWrappedType.MakeGenericType(actionMethodResultType);
-
-                var invokerFacade = (ICommandResultInvoker) container.GetInstance(wrappedResultType);
-
-                var result = invokerFacade.Invoke(actionReturnValue, controllerContext);
-
-                return result;
-            }
-            return base.CreateActionResult(controllerContext, actionDescriptor, actionReturnValue);
+            InjectDependencies(actionResult);
+            base.InvokeActionResult(controllerContext, actionResult);
         }
     }
 }
